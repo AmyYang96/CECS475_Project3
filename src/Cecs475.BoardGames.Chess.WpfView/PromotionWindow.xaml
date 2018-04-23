@@ -1,0 +1,41 @@
+﻿<Window x:Class="Cecs475.BoardGames.Chess.WpfView.PromotionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cecs475.BoardGames.Chess.WpfView"
+        mc:Ignorable="d"
+        Width="400"
+        Height="110"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        >
+
+    <StackPanel>
+        <Label FontSize="18" >Promote pawn to:</Label>
+        <Grid Background="Tan" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border x:Name="borderBishop" Grid.Row="0" Grid.Column="0" BorderThickness="1" BorderBrush="Black" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp" ></Border>
+            <Border x:Name="borderKnight" Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Border>
+            <Border x:Name="borderRook" Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="Black" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Border>
+            <Border x:Name="borderQueen" Grid.Row="0" Grid.Column="3" BorderThickness="1" BorderBrush="Black" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Border>
+            <Image x:Name="whiteKnight" Grid.Row="0" Grid.Column="1" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/white_knight.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"/>
+            <Image x:Name="whiteBishop" Grid.Row="0" Grid.Column="0" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/white_bishop.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Image>
+            <Image x:Name="whiteRook" Grid.Row="0" Grid.Column="2" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/white_rook.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Image>
+            <Image x:Name="whiteQueen" Grid.Row="0" Grid.Column="3" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/white_queen.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Image>
+            <Image x:Name="blackKnight" Grid.Row="0" Grid.Column="1" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/black_knight.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"/>
+            <Image x:Name="blackBishop" Grid.Row="0" Grid.Column="0" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/black_bishop.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp" ></Image>
+            <Image x:Name="blackRook" Grid.Row="0" Grid.Column="2" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/black_rook.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Image>
+            <Image x:Name="blackQueen" Grid.Row="0" Grid.Column="3" Source="/Cecs475.BoardGames.Chess.WpfView;component/Resources/black_queen.png" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" MouseUp="OnMouseUp"></Image>
+        </Grid>
+    </StackPanel>
+</Window>
