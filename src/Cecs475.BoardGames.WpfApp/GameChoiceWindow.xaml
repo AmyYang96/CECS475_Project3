@@ -17,7 +17,7 @@
         </StackPanel.Resources>
         <Label>Choose a game to play:</Label>
         <!-- Bind this ItemsControl to the array of known game types -->
-        <ItemsControl x:Name="GamesList" ItemsSSource="{DynamicResource GameTypes}">
+        <ItemsControl x:Name="GamesList" ItemsSource="{DynamicResource GameTypes}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Click="Button_Click" Content="{Binding GameName, Mode=OneTime}"/>
