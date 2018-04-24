@@ -51,7 +51,7 @@ namespace Cecs475.BoardGames.WpfApp {
                 var game = (IWpfGameFactory)gameConstr.Invoke(new object[0]);
                 games.Add(game);
             }
-            //works up until here, need to checkout
+
             this.Resources.Add("GameTypes", games);
 
 		}
