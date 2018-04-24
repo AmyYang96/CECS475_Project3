@@ -1,6 +1,7 @@
 ﻿using Cecs475.BoardGames.WpfView;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -21,9 +22,41 @@ namespace Cecs475.BoardGames.WpfApp {
 	public partial class GameChoiceWindow : Window {
 		public GameChoiceWindow() {
 			InitializeComponent();
+            Type gameFactoryType = typeof(IWpfGameFactory);
+            string gamesDirectory = AppDomain.CurrentDomain.BaseDirectory +  "Games\\";
+            List<IWpfGameFactory> games = new List<IWpfGameFactory>();
+           
+            try
+            {
+                var dllFiles = Directory.EnumerateFiles(gamesDirectory, "*.dll", SearchOption.AllDirectories);
+
+                foreach (string currentFile in dllFiles)
+                {
+                    Assembly.LoadFrom(currentFile);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+
+            var gameTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => gameFactoryType
+                .IsAssignableFrom(t) && t.IsClass);
+            foreach (var gameType in gameTypes)
+            {
+                var gameConstr = gameType.GetConstructor(Type.EmptyTypes);
+                var game = (IWpfGameFactory)gameConstr.Invoke(new object[0]);
+                games.Add(game);
+            }
+            //works up until here, need to checkout
+            this.Resources.Add("GameTypes", games);
+
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e) {
+        private void Button_Click(object sender, RoutedEventArgs e) {
 			Button b = sender as Button;
 			// Retrieve the game type bound to the button
 			IWpfGameFactory gameType = b.DataContext as IWpfGameFactory;
