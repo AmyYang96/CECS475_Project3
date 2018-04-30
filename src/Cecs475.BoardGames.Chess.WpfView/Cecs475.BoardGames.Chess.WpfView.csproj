@@ -98,6 +98,10 @@
       <Project>{16a691e8-d370-4cab-a02c-1bbbfdf19dd4}</Project>
       <Name>Cecs475.BoardGames.Chess.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Cecs475.BoardGames.ComputerOpponent\Cecs475.BoardGames.ComputerOpponent.csproj">
+      <Project>{57631f73-b885-4835-b4ad-fca5ba2fe328}</Project>
+      <Name>Cecs475.BoardGames.ComputerOpponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cecs475.BoardGames.Model\Cecs475.BoardGames.Model.csproj">
       <Project>{ad3670ac-f179-44fd-b2c4-2bf0c6819355}</Project>
       <Name>Cecs475.BoardGames.Model</Name>

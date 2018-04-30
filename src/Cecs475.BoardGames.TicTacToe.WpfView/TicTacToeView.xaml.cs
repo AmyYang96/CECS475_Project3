@@ -26,7 +26,7 @@ namespace Cecs475.BoardGames.TicTacToe.WpfView {
 
 		public IGameViewModel ViewModel => TicTacToeViewModel;
 
-		private TicTacToeViewModel TicTacToeViewModel => FindResource("vm") as TicTacToeViewModel;
+		public TicTacToeViewModel TicTacToeViewModel => FindResource("vm") as TicTacToeViewModel;
 
 		public TicTacToeView() {
 			InitializeComponent();

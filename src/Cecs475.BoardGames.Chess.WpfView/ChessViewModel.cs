@@ -101,6 +101,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
             }
         }
 
+        
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string name)
         {
@@ -168,7 +169,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
             mPromotionPieces.Add(new PromotionPiece(ChessPieceType.Queen, 9));
             
         }
-        
+        public NumberOfPlayers Players { get; set; }
         public void ApplyMove(BoardPosition startPos, BoardPosition endPos, ChessPieceType pieceType)
         {
         

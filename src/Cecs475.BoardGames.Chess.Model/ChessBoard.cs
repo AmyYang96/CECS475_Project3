@@ -12,6 +12,10 @@ namespace Cecs475.BoardGames.Chess.Model
     /// </summary>
     public class ChessBoard : IGameBoard
     {
+        public long BoardWeight
+        {
+            get; private set;
+        }
 
         private enum PieceValue
         {
