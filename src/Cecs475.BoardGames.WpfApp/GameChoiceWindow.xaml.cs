@@ -23,9 +23,8 @@ namespace Cecs475.BoardGames.WpfApp {
 		public GameChoiceWindow() {
 			InitializeComponent();
             Type gameFactoryType = typeof(IWpfGameFactory);
-            string gamesDirectory = AppDomain.CurrentDomain.BaseDirectory +  "Games\\";
+            string gamesDirectory = AppDomain.CurrentDomain.BaseDirectory +  "games\\";
             List<IWpfGameFactory> games = new List<IWpfGameFactory>();
-           
             try
             {
                 var dllFiles = Directory.EnumerateFiles(gamesDirectory, "*.dll", SearchOption.AllDirectories);
