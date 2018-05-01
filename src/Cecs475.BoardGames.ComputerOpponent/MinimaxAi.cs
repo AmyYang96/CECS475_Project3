@@ -31,6 +31,10 @@ namespace Cecs475.BoardGames.ComputerOpponent
 
         private static MinimaxBestMove FindBestMove(IGameBoard b, int alpha, int beta, int depthLeft)
         {
+            if (depthLeft==0 || b.IsFinished)
+            {
+
+            }
             return new MinimaxBestMove()
             {
                 Move = null
