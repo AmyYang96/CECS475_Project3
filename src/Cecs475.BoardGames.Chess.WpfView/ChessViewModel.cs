@@ -3,6 +3,7 @@ using System.Linq;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Cecs475.BoardGames.WpfView;
+using Cecs475.BoardGames.ComputerOpponent;
 using System;
 
 using Cecs475.BoardGames.Chess.Model;
@@ -12,7 +13,6 @@ namespace Cecs475.BoardGames.Chess.WpfView
 {
     public class ChessSquare : INotifyPropertyChanged
     {
-
         private int mPlayer;
         public int Player
         {
@@ -142,6 +142,8 @@ namespace Cecs475.BoardGames.Chess.WpfView
         private ObservableCollection <PromotionPiece> mPromotionPieces;
         public event EventHandler GameFinished;
         public event PropertyChangedEventHandler PropertyChanged;
+        private const int MAX_AI_DEPTH = 4;
+        private IGameAi mGameAi = new MinimaxAi(MAX_AI_DEPTH);
         private void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -181,6 +183,16 @@ namespace Cecs475.BoardGames.Chess.WpfView
             else//PROMOTION
             {
                 mBoard.ApplyMove(mBoard.GetPossibleMoves().Where(m => startPos == m.StartPosition && endPos == m.EndPosition && pieceType==m.PromoteType).Single());
+            }
+
+
+            if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
+            {
+                var bestMove = mGameAi.FindBestMove(mBoard);
+                if (bestMove != null)
+                {
+                    mBoard.ApplyMove(bestMove as ChessMove);
+                }
             }
             RebindState();
 

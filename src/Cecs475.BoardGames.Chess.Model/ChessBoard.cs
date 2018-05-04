@@ -14,7 +14,14 @@ namespace Cecs475.BoardGames.Chess.Model
     {
         public long BoardWeight
         {
-            get; private set;
+            get
+            {
+                return CurrentPlayer == 1 ? CurrentAdvantage.Advantage : CurrentAdvantage.Advantage * -1;
+            }
+            private set
+            {
+                this.BoardWeight = value;
+            }
         }
 
         private enum PieceValue

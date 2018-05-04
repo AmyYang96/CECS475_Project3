@@ -127,7 +127,7 @@ namespace Cecs475.BoardGames.Othello.WpfView
             if (mBoard.IsFinished)
             {
                 GameFinished?.Invoke(this, new EventArgs());
-            }
+            } 
         }
 
         private void RebindState()
