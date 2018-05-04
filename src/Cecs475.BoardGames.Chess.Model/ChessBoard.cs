@@ -16,6 +16,49 @@ namespace Cecs475.BoardGames.Chess.Model
         {
             get
             {
+                /*
+
+                // Points for ownership of each piece
+                int whiteScore = WhitePoints;
+                int blackScore = BlackPoints;
+
+                foreach (BoardPosition position in BoardPosition.GetRectangularPositions(BoardSize, BoardSize)) {
+                  ChessPieceType pieceType = GetPieceAtPosition(position).PieceType;
+                  int player = GetPieceAtPosition.Player;
+                  // 1 point for each square a pawn has moved forward
+                  if(pieceType.Equals(ChessPieceType.Pawn)) {
+                    player == 1 ? whiteScore += (6 - position.Row) : blackScore += (position.Row - 1);
+                  }
+                  // 1 point for each friendly piece that is threatening your own knight or bishop
+                  if ((pieceType.Equals(ChessPieceType.Knight) || pieceType.Equals(ChessPieceType.Bishop)
+                    && PositionIsThreatened(position, player)) {
+                      player == 1 ? whiteScore++ : blackScore++;
+                  }
+                  // Points for each of your opponent's pieces that you threaten
+                  if (PositionIsThreatened(position, player == 1 ? 2 : 1)) {
+                    switch(pieceType) {
+                      case ChessPieceType.Knight:
+                        player == 1 ? blackScore++ : whiteScore++;
+                        break;
+                      case ChessPieceType.Bishop:
+                        player == 1 ? blackScore++ : whiteScore++;
+                        break;
+                      case ChessPieceType.Rook:
+                        player == 1 ? blackScore += 2 : whiteScore += 2;
+                        break;
+                      case ChessPieceType.Queen:
+                        player == 1 ? blackScore += 5 : whiteScore += 5;
+                        break;
+                      case ChessPieceType.King:
+                        player == 1 ? blackScore += 4 : whiteScore += 4;
+                        break;
+                      default:
+                        break;
+                      }
+                    }
+                  }
+              return whiteScore - blackScore;
+                */
                 return CurrentPlayer == 1 ? CurrentAdvantage.Advantage : CurrentAdvantage.Advantage * -1;
             }
             private set
@@ -61,14 +104,14 @@ namespace Cecs475.BoardGames.Chess.Model
 
         private int mDrawCounter;
 
-        // TODO: add a field for tracking the current player and the board advantage.		
+        // TODO: add a field for tracking the current player and the board advantage.
         private int mCurrentPlayer = 1;
 
         #endregion
 
         #region Properties.
         // TODO: implement these properties.
-        // You can choose to use auto properties, computed properties, or normal properties 
+        // You can choose to use auto properties, computed properties, or normal properties
         // using a private field to back the property.
 
         // You can add set bodies if you think that is appropriate, as long as you justify
@@ -550,7 +593,7 @@ namespace Cecs475.BoardGames.Chess.Model
                 GetPieceAtPosition(leftOfPawn).Player == GetOpponent(lastMove.Player))
                 {//en passant
                     if (GetOpponent(lastMove.Player) == 1)
-                    {//white en passant 
+                    {//white en passant
                         if (GetPieceAtPosition(lastMove.EndPosition.Translate(-1, 0)).PieceType == ChessPieceType.Empty
                             && ForseeCheck(leftOfPawn) == false)
                         {
@@ -570,7 +613,7 @@ namespace Cecs475.BoardGames.Chess.Model
                 GetPieceAtPosition(rightOfPawn).Player == GetOpponent(lastMove.Player))
                 {//en passant from right
                     if (GetOpponent(lastMove.Player) == 1)
-                    {//white en passant 
+                    {//white en passant
                         if (GetPieceAtPosition(lastMove.EndPosition.Translate(-1, 0)).PieceType == ChessPieceType.Empty
                             && ForseeCheck(rightOfPawn) == false)
                         {
@@ -725,7 +768,7 @@ namespace Cecs475.BoardGames.Chess.Model
                             // }
                             // if((directionOfCheck.RowDelta != 0 && directionOfCheck.ColDelta != 0 && Math.Abs(row) == Math.Abs(col))) {
                             // 	canAdd = true;
-                            // } 
+                            // }
 
                             //if(directionOfCheck.RowDelta != 0 && directionOfCheck.ColDelta != 0) {
                             BoardDirection direction = GetDirectionFromKing(byPlayer, move.EndPosition);
@@ -1322,7 +1365,7 @@ namespace Cecs475.BoardGames.Chess.Model
             m.PieceCaptured = pieceToCapture;
             mDrawCounter = 0;//reset
 
-            RemovePieceAtPosition(endingPosition, pieceToCapture);//capture;			
+            RemovePieceAtPosition(endingPosition, pieceToCapture);//capture;
             RemovePieceAtPosition(startingPosition, pieceToMove);
 
             SetPieceAtPosition(endingPosition, pieceToMove);
@@ -1370,7 +1413,7 @@ namespace Cecs475.BoardGames.Chess.Model
             //undo draw count
             if (mMoveHistory.Count > 0)
             {
-                mDrawCounter = mMoveHistory[mMoveHistory.Count - 1].DrawCount;//look back 
+                mDrawCounter = mMoveHistory[mMoveHistory.Count - 1].DrawCount;//look back
             }
             //undo advantange
             if (moveToUndo.Player == 1)
@@ -1406,7 +1449,7 @@ namespace Cecs475.BoardGames.Chess.Model
                             {//reset counter if pawn is moved back
                                 if (mMoveHistory.Count > 0)
                                 {
-                                    mDrawCounter = mMoveHistory[mMoveHistory.Count - 1].DrawCount;//look back 
+                                    mDrawCounter = mMoveHistory[mMoveHistory.Count - 1].DrawCount;//look back
                                 }
                             }
                             else mDrawCounter--;
@@ -1648,7 +1691,7 @@ namespace Cecs475.BoardGames.Chess.Model
         {
             List<BoardPosition> pieces = new List<BoardPosition>();
             // var positionsOfPiece = BoardPosition.GetRectangularPositions(BoardSize, BoardSize).Where(
-            // 	position => piece == GetPieceAtPosition(position).PieceType && 
+            // 	position => piece == GetPieceAtPosition(position).PieceType &&
             // 	player == GetPieceAtPosition(position).Player);
             // return  positionsOfPiece;
 
@@ -1923,7 +1966,7 @@ namespace Cecs475.BoardGames.Chess.Model
 
                 // // To set a particular player at a given position, we must bitwise OR the mask
                 // // into the player's bitboard, and then remove that mask from the other player's
-                // // bitboard. 
+                // // bitboard.
                 // if (player == 1) {
                 // 	mBlackPieces |= mask;
 
