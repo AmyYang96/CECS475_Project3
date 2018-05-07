@@ -12,54 +12,66 @@ namespace Cecs475.BoardGames.Chess.Model
     /// </summary>
     public class ChessBoard : IGameBoard
     {
+        private long mBoardWeight;
+
+        private void CalculateBoardWeight()
+        {
+            // Points for ownership of each piece
+            int whiteScore = WhitePoints;
+            int blackScore = BlackPoints;
+
+            foreach (BoardPosition position in BoardPosition.GetRectangularPositions(BoardSize, BoardSize))
+            {
+                ChessPieceType pieceType = GetPieceAtPosition(position).PieceType;
+                int player = GetPieceAtPosition(position).Player;
+                // 1 point for each square a pawn has moved forward
+                if (pieceType.Equals(ChessPieceType.Pawn))
+                {
+                    if (player == 1) whiteScore += (6 - position.Row); else blackScore += (position.Row - 1);
+                }
+                // 1 point for each friendly piece that is threatening your own knight or bishop
+                foreach (BoardPosition attackedPosition in GetAttackedPositions(player))
+                {
+                    ChessPieceType attackedPieceType = GetPieceAtPosition(attackedPosition).PieceType;
+                    int attackedPlayer = GetPieceAtPosition(attackedPosition).Player;
+                    if ((attackedPieceType == ChessPieceType.Knight || attackedPieceType == ChessPieceType.Bishop) && attackedPlayer == player)
+                    {
+                        if (player == 1) whiteScore++; else blackScore++;
+                    }
+                }
+                // Points for each of your opponent's pieces that you threaten
+                if (PositionIsThreatened(position, player == 1 ? 2 : 1))
+                {
+                    switch (pieceType)
+                    {
+                        case ChessPieceType.Knight:
+                            if (player == 1) blackScore++; else whiteScore++;
+                            break;
+                        case ChessPieceType.Bishop:
+                            if (player == 1) blackScore++; else whiteScore++;
+                            break;
+                        case ChessPieceType.Rook:
+                            if (player == 1) blackScore += 2; else whiteScore += 2;
+                            break;
+                        case ChessPieceType.Queen:
+                            if (player == 1) blackScore += 5; else whiteScore += 5;
+                            break;
+                        case ChessPieceType.King:
+                            if (player == 1) blackScore += 4; else whiteScore += 4;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            mBoardWeight= whiteScore - blackScore;
+
+        }
         public long BoardWeight
         {
             get
             {
-                // Points for ownership of each piece
-                int whiteScore = WhitePoints;
-                int blackScore = BlackPoints;
-
-                foreach (BoardPosition position in BoardPosition.GetRectangularPositions(BoardSize, BoardSize)) {
-                  ChessPieceType pieceType = GetPieceAtPosition(position).PieceType;
-                  int player = GetPieceAtPosition(position).Player;
-                  // 1 point for each square a pawn has moved forward
-                  if(pieceType.Equals(ChessPieceType.Pawn)) {
-                    player == 1 ? whiteScore += (6 - position.Row) : blackScore += (position.Row - 1);
-                  }
-                  // 1 point for each friendly piece that is threatening your own knight or bishop
-                  foreach(BoardPosition attackedPosition in GetAttackedPositions(player)) {
-                    ChessPieceType attackedPieceType = GetPieceAtPosition(attackedPosition).PieceType;
-                    int attackedPlayer = GetPieceAtPosition(attackedPosition).Player;
-                    if((attackedPieceType == ChessPieceType.Knight || attackedPieceType == ChessPieceType.Bishop) && attackedPlayer == player) {
-                         player == 1 ? whiteScore++ : blackScore++;
-                    }
-                  }
-                  // Points for each of your opponent's pieces that you threaten
-                  if (PositionIsThreatened(position, player == 1 ? 2 : 1)) {
-                    switch(pieceType) {
-                      case ChessPieceType.Knight:
-                        player == 1 ? blackScore++ : whiteScore++;
-                        break;
-                      case ChessPieceType.Bishop:
-                        player == 1 ? blackScore++ : whiteScore++;
-                        break;
-                      case ChessPieceType.Rook:
-                        player == 1 ? blackScore += 2 : whiteScore += 2;
-                        break;
-                      case ChessPieceType.Queen:
-                        player == 1 ? blackScore += 5 : whiteScore += 5;
-                        break;
-                      case ChessPieceType.King:
-                        player == 1 ? blackScore += 4 : whiteScore += 4;
-                        break;
-                      default:
-                        break;
-                      }
-                    }
-                  }
-                 return whiteScore - blackScore;
-                
+                return mBoardWeight;
                 //return CurrentPlayer == 1 ? CurrentAdvantage.Advantage : CurrentAdvantage.Advantage * -1;
             }
             private set
@@ -1314,6 +1326,7 @@ namespace Cecs475.BoardGames.Chess.Model
                 if (moveType == ChessMoveType.PawnPromote) mDrawCounter = 0;
                 m.DrawCount = mDrawCounter;
                 mMoveHistory.Add(m);
+                CalculateBoardWeight();
                 if (mCurrentPlayer == 1)
                 {
                     mCurrentPlayer = 2;
@@ -1322,6 +1335,7 @@ namespace Cecs475.BoardGames.Chess.Model
                 {
                     mCurrentPlayer = 1;
                 }
+                
             }
             else
             {
@@ -1515,7 +1529,7 @@ namespace Cecs475.BoardGames.Chess.Model
                         SetPieceAtPosition(endingPosition.Translate(0, 1), rook);
                         break;
                 }
-
+                CalculateBoardWeight();
                 if (CurrentPlayer == 1)
                 {
                     mCurrentPlayer = 2;

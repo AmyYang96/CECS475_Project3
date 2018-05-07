@@ -142,7 +142,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
         private ObservableCollection <PromotionPiece> mPromotionPieces;
         public event EventHandler GameFinished;
         public event PropertyChangedEventHandler PropertyChanged;
-        private const int MAX_AI_DEPTH = 4;
+        private const int MAX_AI_DEPTH = 2;
         private IGameAi mGameAi = new MinimaxAi(MAX_AI_DEPTH);
         private void OnPropertyChanged(string name)
         {
