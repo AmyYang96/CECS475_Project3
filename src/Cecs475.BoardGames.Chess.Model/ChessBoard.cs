@@ -16,23 +16,24 @@ namespace Cecs475.BoardGames.Chess.Model
         {
             get
             {
-                /*
-
                 // Points for ownership of each piece
                 int whiteScore = WhitePoints;
                 int blackScore = BlackPoints;
 
                 foreach (BoardPosition position in BoardPosition.GetRectangularPositions(BoardSize, BoardSize)) {
                   ChessPieceType pieceType = GetPieceAtPosition(position).PieceType;
-                  int player = GetPieceAtPosition.Player;
+                  int player = GetPieceAtPosition(position).Player;
                   // 1 point for each square a pawn has moved forward
                   if(pieceType.Equals(ChessPieceType.Pawn)) {
                     player == 1 ? whiteScore += (6 - position.Row) : blackScore += (position.Row - 1);
                   }
                   // 1 point for each friendly piece that is threatening your own knight or bishop
-                  if ((pieceType.Equals(ChessPieceType.Knight) || pieceType.Equals(ChessPieceType.Bishop)
-                    && PositionIsThreatened(position, player)) {
-                      player == 1 ? whiteScore++ : blackScore++;
+                  foreach(BoardPosition attackedPosition in GetAttackedPositions(player)) {
+                    ChessPieceType attackedPieceType = GetPieceAtPosition(attackedPosition).PieceType;
+                    int attackedPlayer = GetPieceAtPosition(attackedPosition).Player;
+                    if((attackedPieceType == ChessPieceType.Knight || attackedPieceType == ChessPieceType.Bishop) && attackedPlayer == player) {
+                         player == 1 ? whiteScore++ : blackScore++;
+                    }
                   }
                   // Points for each of your opponent's pieces that you threaten
                   if (PositionIsThreatened(position, player == 1 ? 2 : 1)) {
@@ -57,9 +58,9 @@ namespace Cecs475.BoardGames.Chess.Model
                       }
                     }
                   }
-              return whiteScore - blackScore;
-                */
-                return CurrentPlayer == 1 ? CurrentAdvantage.Advantage : CurrentAdvantage.Advantage * -1;
+                 return whiteScore - blackScore;
+                
+                //return CurrentPlayer == 1 ? CurrentAdvantage.Advantage : CurrentAdvantage.Advantage * -1;
             }
             private set
             {
