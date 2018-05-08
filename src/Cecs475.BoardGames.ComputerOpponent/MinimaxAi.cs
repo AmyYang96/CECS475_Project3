@@ -45,19 +45,26 @@ namespace Cecs475.BoardGames.ComputerOpponent
 
             foreach(var move in b.GetPossibleMoves())
             {
-                //b.ApplyMove(move);
+                b.ApplyMove(move);
                 var w = FindBestMove(b, alpha, beta, depthLeft - 1);
-                //b.UndoLastMove();
-                if(isMaximizing && w.Weight>=beta)
+                b.UndoLastMove();
+                if(isMaximizing && w.Weight > alpha)
+                {
+                    alpha = (int)w.Weight;
+                    bestMove = move;
+                } else if(!isMaximizing && w.Weight < beta )
                 {
                     beta = (int)w.Weight;
                     bestMove = move;
-                } else if(!isMaximizing && w.Weight > alpha )
-                {
-                    
-                    alpha = (int)w.Weight;
-                    bestMove = move;
                 }
+                if(alpha >= beta) {
+                    return new MinimaxBestMove() 
+                    {
+                        Move = move;
+                        Weight = b.BoardWeight;
+                    }
+                }
+
             }
 
 
