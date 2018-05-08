@@ -24,12 +24,12 @@ namespace Cecs475.BoardGames.ComputerOpponent
         public IGameMove FindBestMove(IGameBoard b)
         {
             return FindBestMove(b,
-                true ? int.MinValue : int.MaxValue,
-                true ? int.MaxValue : int.MinValue,
+                true ? long.MinValue : long.MaxValue,
+                true ? long.MaxValue : long.MinValue,
                 mMaxDepth).Move;
         }
 
-        private static MinimaxBestMove FindBestMove(IGameBoard b, int alpha, int beta, int depthLeft)
+        private static MinimaxBestMove FindBestMove(IGameBoard b, long alpha, long beta, int depthLeft)
         {
             if (depthLeft==0 || b.IsFinished)
             {
@@ -40,7 +40,7 @@ namespace Cecs475.BoardGames.ComputerOpponent
                 };
             }
             bool isMaximizing = (b.CurrentPlayer == 1) ? true : false;
-            long bestWeight = (isMaximizing) ? long.MinValue : long.MaxValue;
+            //long bestWeight = (isMaximizing) ? long.MinValue : long.MaxValue;
             IGameMove bestMove = null;
 
             foreach(var move in b.GetPossibleMoves())
@@ -50,28 +50,29 @@ namespace Cecs475.BoardGames.ComputerOpponent
                 b.UndoLastMove();
                 if(isMaximizing && w.Weight > alpha)
                 {
-                    alpha = (int)w.Weight;
+                    alpha = w.Weight;
                     bestMove = move;
                 } else if(!isMaximizing && w.Weight < beta )
                 {
-                    beta = (int)w.Weight;
+                    beta = w.Weight;
                     bestMove = move;
                 }
                 if(alpha >= beta) {
-                    return new MinimaxBestMove() 
+                    long opponentsWeight = (isMaximizing) ? beta : alpha;
+                    return new MinimaxBestMove()
                     {
-                        Move = move;
-                        Weight = b.BoardWeight;
-                    }
+                        Move = move,
+                        Weight = opponentsWeight
+                    };
                 }
 
             }
 
-
+            long myWeight = (isMaximizing) ? alpha : beta;
             return new MinimaxBestMove()
             {
-                Weight = alpha,
-                Move = bestMove
+                Move = bestMove,
+                Weight = myWeight
             };
         }
 
