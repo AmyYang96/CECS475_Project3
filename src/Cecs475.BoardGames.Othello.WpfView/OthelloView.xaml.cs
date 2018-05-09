@@ -45,14 +45,17 @@ namespace Cecs475.BoardGames.Othello.WpfView {
 
 		public IGameViewModel ViewModel => OthelloViewModel;
 
-		private void Border_MouseUp(object sender, MouseButtonEventArgs e) {
-			Border b = sender as Border;
-			var square = b.DataContext as OthelloSquare;
-			var vm = FindResource("vm") as OthelloViewModel;
-			if (vm.PossibleMoves.Contains(square.Position)) {
-				vm.ApplyMove(square.Position);
-				square.IsHighlighted = false;
-			}
+		private async void Border_MouseUp(object sender, MouseButtonEventArgs e) {
+            
+            Border b = sender as Border;
+            var square = b.DataContext as OthelloSquare;
+            var vm = FindResource("vm") as OthelloViewModel;
+            if (vm.PossibleMoves.Contains(square.Position))
+            {
+                vm.ApplyMove(square.Position);
+                square.IsHighlighted = false;
+            }
+            
 		}
 	}
 }

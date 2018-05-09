@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using Cecs475.BoardGames.WpfView;
 using Cecs475.BoardGames.ComputerOpponent;
 using System;
-
+using System.Threading.Tasks;
 using Cecs475.BoardGames.Chess.Model;
 using Cecs475.BoardGames.Model;
 
@@ -172,7 +172,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
             
         }
         public NumberOfPlayers Players { get; set; }
-        public void ApplyMove(BoardPosition startPos, BoardPosition endPos, ChessPieceType pieceType)
+        public async void ApplyMove(BoardPosition startPos, BoardPosition endPos, ChessPieceType pieceType)
         {
         
             var possMove = mBoard.GetPossibleMoves().Where(m => startPos == m.StartPosition && endPos == m.EndPosition);
@@ -188,10 +188,11 @@ namespace Cecs475.BoardGames.Chess.WpfView
 
             if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
             {
-                var bestMove = mGameAi.FindBestMove(mBoard);
-                if (bestMove != null)
+                var bestMove = Task.Run(() => mGameAi.FindBestMove(mBoard));
+                var waitBestMove = await bestMove;
+                if (waitBestMove != null)
                 {
-                    mBoard.ApplyMove(bestMove as ChessMove);
+                    mBoard.ApplyMove(waitBestMove as ChessMove);
                 }
             }
             RebindState();

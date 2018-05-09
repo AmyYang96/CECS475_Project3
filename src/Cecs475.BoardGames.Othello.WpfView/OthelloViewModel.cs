@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Cecs475.BoardGames.WpfView;
 using System;
-
+using System.Threading.Tasks;
 using Cecs475.BoardGames.Othello.Model;
 using Cecs475.BoardGames.Model;
 using Cecs475.BoardGames.ComputerOpponent;
@@ -100,7 +100,7 @@ namespace Cecs475.BoardGames.Othello.WpfView
         /// <summary>
         /// Applies a move for the current player at the given position.
         /// </summary>
-        public void ApplyMove(BoardPosition position)
+        public async void ApplyMove(BoardPosition position)
         {
             var possMoves = mBoard.GetPossibleMoves() as IEnumerable<OthelloMove>;
             // Validate the move as possible.
@@ -115,10 +115,11 @@ namespace Cecs475.BoardGames.Othello.WpfView
 
             if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
             {
-                var bestMove = mGameAi.FindBestMove(mBoard);
-                if (bestMove != null)
+                var bestMove = Task.Run(() => mGameAi.FindBestMove(mBoard));
+                var waitBestMove = await bestMove;
+                if (waitBestMove != null)
                 {
-                    mBoard.ApplyMove(bestMove as OthelloMove);
+                    mBoard.ApplyMove(waitBestMove as OthelloMove);
                 }
             }
 
@@ -182,10 +183,15 @@ namespace Cecs475.BoardGames.Othello.WpfView
 
         public GameAdvantage BoardAdvantage => mBoard.CurrentAdvantage;
 
-        public bool CanUndo => mBoard.MoveHistory.Any();
+        public bool CanUndo => mBoard.MoveHistory.Any() ;
 
         public NumberOfPlayers Players { get; set; }
 
+        public bool CanEnable
+        {
+            get;
+            set;
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string name)
         {

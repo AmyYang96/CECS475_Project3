@@ -78,7 +78,7 @@ namespace Cecs475.BoardGames.TicTacToe.WpfView
             );
         }
 
-        public void ApplyMove(BoardPosition position)
+        public async void ApplyMove(BoardPosition position)
         {
             var possMoves = mBoard.GetPossibleMoves() as IEnumerable<TicTacToeMove>;
             foreach (var move in possMoves)
@@ -92,10 +92,11 @@ namespace Cecs475.BoardGames.TicTacToe.WpfView
 
             if (Players == NumberOfPlayers.One && !mBoard.IsFinished)
             {
-                var bestMove = mGameAi.FindBestMove(mBoard);
-                if (bestMove != null)
+                var bestMove = Task.Run(() => mGameAi.FindBestMove(mBoard));
+                var waitBestMove = await bestMove;
+                if (waitBestMove != null)
                 {
-                    mBoard.ApplyMove(bestMove as TicTacToeMove);
+                    mBoard.ApplyMove(waitBestMove as TicTacToeMove);
                 }
             }
 

@@ -60,7 +60,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
         public IGameViewModel ViewModel => ChessViewModel;
 
 
-        private void Border_MouseUp(object sender, MouseButtonEventArgs e)
+        private async void Border_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Border b = sender as Border;
             var square = b.DataContext as ChessSquare;
