@@ -322,3 +322,6 @@ ASALocalRun/
 # MSBuild Binary and Structured Log
 *.binlog
 
+# SNK FILES
+*.snk
+
