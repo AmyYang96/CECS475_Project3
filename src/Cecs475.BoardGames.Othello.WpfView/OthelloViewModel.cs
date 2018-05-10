@@ -76,11 +76,11 @@ namespace Cecs475.BoardGames.Othello.WpfView
         public event EventHandler GameFinished;
         private const int MAX_AI_DEPTH = 7;
         private IGameAi mGameAi = new MinimaxAi(MAX_AI_DEPTH);
-
+        
         public OthelloViewModel()
         {
             mBoard = new OthelloBoard();
-
+            CanEnable = true;
             // Initialize the squares objects based on the board's initial state.
             mSquares = new ObservableCollection<OthelloSquare>(
                 BoardPosition.GetRectangularPositions(8, 8)
@@ -150,6 +150,7 @@ namespace Cecs475.BoardGames.Othello.WpfView
             OnPropertyChanged(nameof(BoardAdvantage));
             OnPropertyChanged(nameof(CurrentPlayer));
             OnPropertyChanged(nameof(CanUndo));
+            OnPropertyChanged(nameof(CanEnable));
         }
 
         /// <summary>
@@ -200,6 +201,7 @@ namespace Cecs475.BoardGames.Othello.WpfView
 
         public void UndoMove()
         {
+            if (!CanEnable) return;
             if (CanUndo)
             {
                 mBoard.UndoLastMove();

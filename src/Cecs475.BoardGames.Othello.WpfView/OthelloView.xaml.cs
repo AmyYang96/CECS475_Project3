@@ -50,9 +50,11 @@ namespace Cecs475.BoardGames.Othello.WpfView {
             Border b = sender as Border;
             var square = b.DataContext as OthelloSquare;
             var vm = FindResource("vm") as OthelloViewModel;
-            if (vm.PossibleMoves.Contains(square.Position))
+            if (vm.PossibleMoves.Contains(square.Position) && vm.CanEnable)
             {
+                vm.CanEnable = false;
                 await vm.ApplyMove(square.Position);
+                vm.CanEnable = true;
                 square.IsHighlighted = false;
             }
             

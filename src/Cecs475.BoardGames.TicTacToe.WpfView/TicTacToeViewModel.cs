@@ -60,9 +60,14 @@ namespace Cecs475.BoardGames.TicTacToe.WpfView
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
+        public bool CanEnable
+        {
+            get;
+            set;
+        }
         public TicTacToeViewModel()
         {
+            CanEnable = true;
             mBoard = new TicTacToeBoard();
             mSquares = new ObservableCollection<TicTacToeSquare>(
                 BoardPosition.GetRectangularPositions(3, 3)
@@ -115,10 +120,12 @@ namespace Cecs475.BoardGames.TicTacToe.WpfView
             OnPropertyChanged(nameof(BoardAdvantage));
             OnPropertyChanged(nameof(CurrentPlayer));
             OnPropertyChanged(nameof(CanUndo));
+            OnPropertyChanged(nameof(CanEnable));
         }
 
         public void UndoMove()
         {
+            if (!CanEnable) return;
             if (CanUndo)
             {
                 mBoard.UndoLastMove();
