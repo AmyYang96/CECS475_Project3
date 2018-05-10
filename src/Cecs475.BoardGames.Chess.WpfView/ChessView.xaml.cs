@@ -84,7 +84,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
                 }
                 else
                 {
-                    vm.ApplyMove(mSelectedSquare.Position, square.Position,Model.ChessPieceType.Empty);
+                    await vm.ApplyMove(mSelectedSquare.Position, square.Position,Model.ChessPieceType.Empty);
                 }
 
                 square.IsHighlighted = true;

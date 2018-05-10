@@ -100,7 +100,7 @@ namespace Cecs475.BoardGames.Othello.WpfView
         /// <summary>
         /// Applies a move for the current player at the given position.
         /// </summary>
-        public async void ApplyMove(BoardPosition position)
+        public async Task ApplyMove(BoardPosition position)
         {
             var possMoves = mBoard.GetPossibleMoves() as IEnumerable<OthelloMove>;
             // Validate the move as possible.

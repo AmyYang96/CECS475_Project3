@@ -78,7 +78,7 @@ namespace Cecs475.BoardGames.TicTacToe.WpfView
             );
         }
 
-        public async void ApplyMove(BoardPosition position)
+        public async Task ApplyMove(BoardPosition position)
         {
             var possMoves = mBoard.GetPossibleMoves() as IEnumerable<TicTacToeMove>;
             foreach (var move in possMoves)

@@ -172,7 +172,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
             
         }
         public NumberOfPlayers Players { get; set; }
-        public async void ApplyMove(BoardPosition startPos, BoardPosition endPos, ChessPieceType pieceType)
+        public async Task ApplyMove(BoardPosition startPos, BoardPosition endPos, ChessPieceType pieceType)
         {
         
             var possMove = mBoard.GetPossibleMoves().Where(m => startPos == m.StartPosition && endPos == m.EndPosition);
