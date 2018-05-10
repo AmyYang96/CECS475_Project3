@@ -142,6 +142,10 @@ namespace Cecs475.BoardGames.Chess.WpfView
         private ObservableCollection <PromotionPiece> mPromotionPieces;
         public event EventHandler GameFinished;
         public event PropertyChangedEventHandler PropertyChanged;
+        public bool CanEnable
+        {
+            get; set;
+        }
         private const int MAX_AI_DEPTH = 2;
         private IGameAi mGameAi = new MinimaxAi(MAX_AI_DEPTH);
         private void OnPropertyChanged(string name)
@@ -163,6 +167,8 @@ namespace Cecs475.BoardGames.Chess.WpfView
                 })
              );
 
+            CanEnable = true;
+
             PossibleMoves = mBoard.GetPossibleMoves();
             mPromotionPieces = new ObservableCollection<PromotionPiece>();
             mPromotionPieces.Add(new PromotionPiece(ChessPieceType.Bishop, 3));
@@ -174,7 +180,6 @@ namespace Cecs475.BoardGames.Chess.WpfView
         public NumberOfPlayers Players { get; set; }
         public async Task ApplyMove(BoardPosition startPos, BoardPosition endPos, ChessPieceType pieceType)
         {
-        
             var possMove = mBoard.GetPossibleMoves().Where(m => startPos == m.StartPosition && endPos == m.EndPosition);
             if (possMove.Count()==1)
             {
@@ -226,6 +231,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
             OnPropertyChanged(nameof(BoardAdvantage));
             OnPropertyChanged(nameof(CurrentPlayer));
             OnPropertyChanged(nameof(CanUndo));
+            OnPropertyChanged(nameof(CanEnable));
         }
 
         public bool IsPossibleStartPosition(BoardPosition startPos)
@@ -260,7 +266,6 @@ namespace Cecs475.BoardGames.Chess.WpfView
         {
             get { return mBoard.CurrentPlayer;  }
         }
-
         public bool CanUndo
         {
             get
@@ -274,6 +279,7 @@ namespace Cecs475.BoardGames.Chess.WpfView
 
         public void UndoMove()
         {
+            if (!CanEnable) return;
             mBoard.UndoLastMove();
             //PossibleMoves = new HashSet<BoardPosition>(mBoard.GetPossibleMoves().Select(m => m.EndPosition));
             RebindState();

@@ -18,7 +18,7 @@ namespace Cecs475.BoardGames.Chess.Model
             get
             {
                 // Points for ownership of each piece
-                /*int whiteScore = WhitePoints;
+                int whiteScore = WhitePoints;
                 int blackScore = BlackPoints;
 
                 foreach (BoardPosition position in BoardPosition.GetRectangularPositions(BoardSize, BoardSize))
@@ -65,8 +65,8 @@ namespace Cecs475.BoardGames.Chess.Model
                         }
                     }
                 }
-                return whiteScore - blackScore;*/
-                return CurrentPlayer == 1 ? CurrentAdvantage.Advantage : CurrentAdvantage.Advantage * -1;
+                return whiteScore - blackScore;
+                //return CurrentPlayer == 1 ? CurrentAdvantage.Advantage : CurrentAdvantage.Advantage * -1;
             }
             private set
             {

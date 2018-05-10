@@ -82,9 +82,11 @@ namespace Cecs475.BoardGames.Chess.WpfView
                     var promotionWindow = new PromotionWindow(vm, mSelectedSquare.Position, square.Position);
                     promotionWindow.ShowDialog();
                 }
-                else
+                else if(vm.CanEnable)
                 {
+                    vm.CanEnable = false;
                     await vm.ApplyMove(mSelectedSquare.Position, square.Position,Model.ChessPieceType.Empty);
+                    vm.CanEnable = true;
                 }
 
                 square.IsHighlighted = true;
