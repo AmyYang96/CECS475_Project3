@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-//using RestSharp;
+using RestSharp;
 
 namespace Cecs475.BoardGames.WpfApp
 {
@@ -23,18 +23,25 @@ namespace Cecs475.BoardGames.WpfApp
         public LoadingWindow()
         {
             InitializeComponent();
-            /*var client = new RestClient("https://cecs475-boardgames.herokuapp.com/");
+            LoadGames();
+            
+        }
+
+        private async void LoadGames()
+        {
+            var client = new RestClient("https://cecs475-boardgames.herokuapp.com/");
             var request = new RestRequest("api/games", Method.GET);
             var task = client.ExecuteTaskAsync(request);
             var response = await task;
 
-            if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 MessageBox.Show("No games found");
-            } else
+            }
+            else
             {
 
-            }*/
+            }
         }
     }
 }
