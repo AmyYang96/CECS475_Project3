@@ -29,7 +29,7 @@ namespace Cecs475.BoardGames.WpfApp
 
         private async void LoadGames()
         {
-            var client = new RestClient("https://cecs475-boardgames.herokuapp.com/");
+            var client = new RestClient("https://cecs475-boardamges.herokuapp.com/");
             var request = new RestRequest("api/games", Method.GET);
             var task = client.ExecuteTaskAsync(request);
             var response = await task;
@@ -40,7 +40,9 @@ namespace Cecs475.BoardGames.WpfApp
             }
             else
             {
-
+                GameChoiceWindow gameChoiceWindow = new GameChoiceWindow();
+                this.Close();
+                gameChoiceWindow.Show();
             }
         }
     }
