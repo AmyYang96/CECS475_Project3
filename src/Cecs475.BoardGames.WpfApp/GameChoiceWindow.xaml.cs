@@ -32,7 +32,9 @@ namespace Cecs475.BoardGames.WpfApp {
                 foreach (string currentFile in dllFiles)
                 {
                     //string loadSemantics = System.IO.Path.GetFileNameWithoutExtension(currentFile) + ", Version=1.0.0.0, Culture=neutral, PublicKeyToken=68e71c13048d452a";
-                    //Assembly.Load(loadSemantics);
+                    //MessageBox.Show(System.IO.Path.GetFileNameWithoutExtension(currentFile));
+                   // Assembly.Load(loadSemantics);
+                   
                     Assembly.LoadFrom(currentFile);
                 }
             }
