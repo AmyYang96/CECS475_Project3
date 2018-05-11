@@ -43,22 +43,22 @@ namespace Cecs475.BoardGames.WpfApp
             }
             else
             {
-                GameChoiceWindow gameChoiceWindow = new GameChoiceWindow();
-                this.Close();
-                gameChoiceWindow.Show();
-                
-                JArray games = JArray.Parse(response.Content);
+                 JArray games = JArray.Parse(response.Content);
                 foreach(var game in games)
                 {
                     WebClient webClient = new WebClient();
                     Uri uri = new Uri(game["Files"][0]["Url"].ToString());
-                    string fileName = game["Files"][0]["FileName"].ToString();
-                    await webClient.DownloadFileTaskAsync(uri, fileName);
+                    string filePath = "games/" + game["Files"][0]["FileName"].ToString();
+                    await webClient.DownloadFileTaskAsync(uri, filePath);
                     uri = new Uri(game["Files"][1]["Url"].ToString());
-                    fileName = game["Files"][1]["FileName"].ToString();
-                    await webClient.DownloadFileTaskAsync(uri, fileName);
+                    filePath = "games/" + game["Files"][1]["FileName"].ToString();
+                    await webClient.DownloadFileTaskAsync(uri, filePath);
                 }
-               
+
+                GameChoiceWindow gameChoiceWindow = new GameChoiceWindow();
+                this.Close();
+                gameChoiceWindow.Show();
+
             }
         }
     }
