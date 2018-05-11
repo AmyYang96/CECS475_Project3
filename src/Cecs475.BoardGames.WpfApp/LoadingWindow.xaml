@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cecs475.BoardGames.WpfApp"
         mc:Ignorable="d"
-        Title="LoadingWindow" Height="300" Width="300">
+        Title="LoadingWindow" Height="300" Width="300"
+        WindowStartupLocation="CenterScreen">
     <Label>
         Loading games, please wait...
     </Label>
